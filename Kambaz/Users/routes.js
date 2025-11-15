@@ -19,7 +19,7 @@ export default function UserRoutes(app, db) {
       res.status(400).json({ message: "Username already in use" });
       return;
     }
-    currentUser = dao.createUser(req.body);
+    const currentUser = dao.createUser(req.body);
     res.json(currentUser);
   };
   const signin = (req, res) => {

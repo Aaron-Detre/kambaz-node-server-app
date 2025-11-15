@@ -3,7 +3,7 @@ export default function UsersDao(db) {
   let { users } = db;
   const createUser = (user) => {
     const newUser = { ...user, _id: uuidv4() };
-    users = [...users, newUser];
+    db.users = [...users, newUser];
     return newUser;
   };
   const findAllUsers = () => users;
@@ -15,9 +15,9 @@ export default function UsersDao(db) {
       (user) => user.username === username && user.password === password
     );
   const updateUser = (userId, user) =>
-    (users = users.map((u) => (u._id === userId ? user : u)));
+    (db.users = users.map((u) => (u._id === userId ? user : u)));
   const deleteUser = (userId) =>
-    (users = users.filter((u) => u._id !== userId));
+    (db.users = users.filter((u) => u._id !== userId));
   return {
     createUser,
     findAllUsers,
