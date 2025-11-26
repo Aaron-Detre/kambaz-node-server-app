@@ -1,11 +1,12 @@
 import EnrollmentsDao from "./dao.js";
 
-export default function EnrollmentsRoutes(app, db) {
-  const enrollmentsDao = EnrollmentsDao(db);
+export default function EnrollmentsRoutes(app) {
+  const enrollmentsDao = EnrollmentsDao();
 
-  const findCoursesForUser = async (req, res) => {
+  const findUserEnrollments = async (req, res) => {
     const { uid } = req.params;
-    const enrollments = await enrollmentsDao.findCoursesForUser(uid);
+    const enrollments = await enrollmentsDao.findUserEnrollments(uid);
+    console.log(enrollments);
     res.json(enrollments);
   };
   const enrollUserInCourse = async (req, res) => {
@@ -19,7 +20,7 @@ export default function EnrollmentsRoutes(app, db) {
     res.send(status);
   };
 
-  app.get("/api/enrollments/:uid", findCoursesForUser);
+  app.get("/api/enrollments/:uid", findUserEnrollments);
   app.post("/api/enrollments/:uid/:cid", enrollUserInCourse);
   app.delete("/api/enrollments/:uid/:cid", unenrollUserInCourse);
 }
