@@ -20,7 +20,12 @@ export default function CoursesDao() {
     return model.find({}, { name: 1, description: 1, image: 1 });
   }
 
+  function findCourseById(courseId) {
+    return model.find({ _id: courseId });
+  }
+
   function createCourse(course) {
+    console.log("new course");
     const newCourse = { ...course, _id: uuidv4() };
     return model.create(newCourse);
   }
@@ -61,6 +66,7 @@ export default function CoursesDao() {
 
   return {
     findAllCourses,
+    findCourseById,
     findCoursesForEnrolledUser,
     createCourse,
     deleteCourse,

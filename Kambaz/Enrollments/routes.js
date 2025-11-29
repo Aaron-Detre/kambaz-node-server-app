@@ -6,7 +6,6 @@ export default function EnrollmentsRoutes(app) {
   const findUserEnrollments = async (req, res) => {
     const { uid } = req.params;
     const enrollments = await enrollmentsDao.findUserEnrollments(uid);
-    console.log(enrollments);
     res.json(enrollments);
   };
   const enrollUserInCourse = async (req, res) => {
@@ -19,8 +18,14 @@ export default function EnrollmentsRoutes(app) {
     const status = await enrollmentsDao.unenrollUserInCourse(uid, cid);
     res.send(status);
   };
+  const unenrollAllFromCourse = async (req, res) => {
+    const { cid } = req.params;
+    const status = await enrollmentsDao.unenrollAllFromCourse(cid);
+    res.send(status);
+  };
 
   app.get("/api/enrollments/:uid", findUserEnrollments);
   app.post("/api/enrollments/:uid/:cid", enrollUserInCourse);
   app.delete("/api/enrollments/:uid/:cid", unenrollUserInCourse);
+  app.delete("/api/enrollments/:cid", unenrollAllFromCourse);
 }
